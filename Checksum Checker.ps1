@@ -7,7 +7,6 @@
 [void][Reflection.Assembly]::LoadWithPartialName("System.Windows.Forms")
 [void][Reflection.Assembly]::LoadWithPartialName("System.Drawing")
 
-
 $MS_main = new-object System.Windows.Forms.MenuStrip
 $fileMenuItem = new-object System.Windows.Forms.ToolStripMenuItem
 $exitMenuItem = new-object System.Windows.Forms.ToolStripMenuItem
@@ -243,7 +242,6 @@ $global:sha256 = ''
 $global:sha512 = ''
 
 $textboxComputerName_KeyDown = {}
-
 
 
 ## Enables 'enter' key one textbox
