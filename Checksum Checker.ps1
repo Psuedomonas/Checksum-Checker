@@ -93,7 +93,6 @@ function OnFormClosing_MenuForm($Sender,$e){
     ($_).Cancel= $False
 }
 
-
 ## File
 $Lblfile = new-object System.Windows.Forms.Label
 $Lblfile.Text = "File:"
@@ -233,18 +232,19 @@ $BtnVerify.AutoSize = $true
 $main_form.Controls.Add($BtnVerify)
 
 $OpenFileDialog = new-object System.Windows.Forms.OpenFileDialog
-
-## Global variables
+#
+# Global variables
+#
 $global:fileToCheckfileToCheck
 $global:md5 = ''
 $global:sha1 = ''
 $global:sha256 = ''
 $global:sha512 = ''
-
+#
+# Enables 'enter' key one textbox
+#
 $textboxComputerName_KeyDown = {}
 
-
-## Enables 'enter' key one textbox
 $Txtfile.Add_KeyDown(
 {
     if ($_.KeyCode -eq "Enter") {
@@ -259,7 +259,9 @@ $Txtfile.Add_KeyDown(
     }
 }
 )
-
+#
+# Select File Function
+#
 function selectFile {
     [void] $OpenFileDialog.ShowDialog()
     if ($OpenFileDialog.CheckFileExists -and $OpenFileDialog.FileName -ne '')
@@ -318,14 +320,17 @@ function selectFile {
 		$Txtfile.Text = $global:fileToCheck
 	}
 }
-
-
+#
+# The Select File button
+#
 $Btnfile.Add_Click(
 {
     selectFile    
 }
 )
-
+#
+# Verify file button & checksum verification
+#
 $BtnVerify.Add_Click(
 {
 	if (($global:md5 -ne '') -and ($global:fileToCheck -ne ''))
@@ -353,31 +358,41 @@ $BtnVerify.Add_Click(
 	}
 }
 )
-
+#
+# Copy MD5 checksum
+#
 $Btnmd5copy.Add_Click(
 {
 	Set-Clipboard -Value $global:md5
 }
 )
-
+#
+# Copy Sha1 checksum
+#
 $Btnsha1copy.Add_Click(
 {
 	Set-Clipboard -Value $global:sha1
 }
 )
-
+#
+# Copy Sha256 checksum
+#
 $Btnsha256copy.Add_Click(
 {
 	Set-Clipboard -Value $global:sha256
 }
 )
-
+#
+# Copy Sha512 checksum
+#
 $Btnsha512copy.Add_Click(
 {
 	Set-Clipboard -Value $global:sha512
 }
 )
-
+#
+# Copy all checksum as seperate lines, no labels
+#
 $Btncopyall.Add_Click(
 {
 	Set-Clipboard -Value $global:md5
@@ -386,12 +401,17 @@ $Btncopyall.Add_Click(
 	Set-Clipboard -Append -Value $global:sha512
 }
 )
-
+#
+# Paste string from clipboard to the comparison checkbox
+#
 $Btnpaste.Add_Click(
 {
 	$Txtcompare.Text = Get-Clipboard
 }
 )
+#
+# Main Form load and close
+#
 $main_form.Add_FormClosing( { OnFormClosing_MenuForm $main_form $EventArgs} )
 $main_form.Add_Shown({$main_form.Activate()})
 $main_form.ShowDialog()
