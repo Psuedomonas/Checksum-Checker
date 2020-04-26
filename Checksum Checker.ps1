@@ -363,7 +363,10 @@ $BtnVerify.Add_Click(
 #
 $Btnmd5copy.Add_Click(
 {
-	Set-Clipboard -Value $global:md5
+	if ($global:md5)
+	{
+		Set-Clipboard -Value $global:md5
+	}
 }
 )
 #
@@ -371,7 +374,10 @@ $Btnmd5copy.Add_Click(
 #
 $Btnsha1copy.Add_Click(
 {
-	Set-Clipboard -Value $global:sha1
+	if ($global:sha1)
+	{
+		Set-Clipboard -Value $global:sha1
+	}
 }
 )
 #
@@ -379,15 +385,21 @@ $Btnsha1copy.Add_Click(
 #
 $Btnsha256copy.Add_Click(
 {
-	Set-Clipboard -Value $global:sha256
-}
+	if ($global:sha256) 
+	{
+		Set-Clipboard -Value $global:sha256
+	}
+}	
 )
 #
 # Copy Sha512 checksum
 #
 $Btnsha512copy.Add_Click(
 {
-	Set-Clipboard -Value $global:sha512
+	if ($global:sha512)
+	{
+		Set-Clipboard -Value $global:sha512
+	}
 }
 )
 #
@@ -395,7 +407,7 @@ $Btnsha512copy.Add_Click(
 #
 $Btncopyall.Add_Click(
 {
-	if ($global:md5)
+	if ($global:md5) #check for $null
 	{
 		Set-Clipboard -Value $global:md5
 	}
