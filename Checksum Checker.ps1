@@ -395,10 +395,21 @@ $Btnsha512copy.Add_Click(
 #
 $Btncopyall.Add_Click(
 {
-	Set-Clipboard -Value $global:md5
-	Set-Clipboard -Append -Value $global:sha1
-	Set-Clipboard -Append -Value $global:sha256
-	Set-Clipboard -Append -Value $global:sha512
+	if ($global:md5)
+	{
+		Set-Clipboard -Value $global:md5
+	}
+	if ($global:sha1)
+	{
+		Set-Clipboard -Append -Value $global:sha1
+	}
+	if ($global:sha256) {
+		Set-Clipboard -Append -Value $global:sha256
+	}
+	if ($global:sha512)
+	{
+		Set-Clipboard -Append -Value $global:sha512
+	}
 }
 )
 #
