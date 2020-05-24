@@ -10,12 +10,13 @@
 $MS_main = new-object System.Windows.Forms.MenuStrip
 $fileMenuItem = new-object System.Windows.Forms.ToolStripMenuItem
 $exitMenuItem = new-object System.Windows.Forms.ToolStripMenuItem
+$optionsMenuItem = new-object System.Windows.Forms.ToolStripMenuItem
 $aboutMenuItem = new-object System.Windows.Forms.ToolStripMenuItem
 $helpMenuItem = new-object System.Windows.Forms.ToolStripMenuItem
 #
 # MS_Main
 #
-$MS_Main.Items.AddRange(@($fileMenuItem, $helpMenuItem, $aboutMenuItem))
+$MS_Main.Items.AddRange(@($fileMenuItem, $optionsMenuItem, $helpMenuItem))
 $MS_Main.Location = new-object System.Drawing.Point(0, 0)
 $MS_Main.Name = "MS_Main"
 $MS_Main.Size = new-object System.Drawing.Size(354, 24)
@@ -28,6 +29,20 @@ $fileMenuItem.DropDownItems.AddRange(@($exitMenuItem))
 $fileMenuItem.Name = "fileMenuItem"
 $fileMenuItem.Size = new-object System.Drawing.Size(35, 20)
 $fileMenuItem.Text = "&File"
+#
+# Options Menu Object
+#
+$optionsMenuItem.DropDownItems.AddRange(@($optionsMenuItem))
+$optionsMenuItem.Name = "optionsMenuItem"
+$optionsMenuItem.Size = new-object System.Drawing.Size(35, 20)
+$optionsMenuItem.Text = "&Options"
+#
+# Help Menu object
+#
+$helpMenuItem.DropDownItems.AddRange(@($aboutMenuItem))
+$helpMenuItem.Name = "helpMenuItem"
+$helpMenuItem.Size = new-object System.Drawing.Size(35, 20)
+$helpMenuItem.Text = "&Help"
 #
 # About menu strip item
 #
@@ -43,23 +58,18 @@ Interface and function inspired by Raymond Lin's MD5 and Sha Checksum Utility
 Github: https://github.com/Psuedomonas/Checksum-Checker"
 	)
 }
-	
+
 $aboutMenuItem.Add_Click( { OnClick_aboutMenuItem $aboutMenuItem $EventArgs} )
-#
-# Help menu strip item
-#
-$helpMenuItem.Name = "helpMenuItem"
-$helpMenuItem.Size = new-object System.Drawing.Size(152, 22)
-$helpMenuItem.Text = "&Help"
-function OnClick_helpMenuItem($Sender,$e){
+
+<#function OnClick_helpMenuItem($Sender,$e){
 	[void][System.Windows.Forms.MessageBox]::Show(
 "1. Press 'Select File' to choose a file to process the checksum
 2. Paste the checksum provided by the distributer in the checksum box
 3. 'Verify' the checksum matches the provider's"
 	)
 }
+$helpMenuItem.Add_Click( { OnClick_helpMenuItem $helpMenuItem $EventArgs} ) #>
 
-$helpMenuItem.Add_Click( { OnClick_helpMenuItem $helpMenuItem $EventArgs} )
 #
 # Exit menu strip item
 #
@@ -71,6 +81,7 @@ function OnClick_exitMenuItem($Sender,$e){
 }
 
 $exitMenuItem.Add_Click( { OnClick_exitMenuItem $exitMenuItem $EventArgs} )
+
 #
 # Make GUI (Windows Form)
 #
@@ -230,6 +241,13 @@ $BtnVerify.Location = new-object System.Drawing.Point(490,248)
 $BtnVerify.Width = 90
 $BtnVerify.AutoSize = $true
 $main_form.Controls.Add($BtnVerify)
+
+$BtnClear = new-object System.Windows.Forms.Button
+$BtnClear.Text = 'Clear'
+$BtnClear.Location = new-object System.Drawing.Point(490, 280)
+$BtnClear.Width = 90
+$BtnClear.AutoSize = $true
+$main_form.Controls.Add($BtnClear)
 
 $OpenFileDialog = new-object System.Windows.Forms.OpenFileDialog
 #
@@ -432,6 +450,12 @@ $Btnpaste.Add_Click(
 	$Txtcompare.Text = Get-Clipboard
 }
 )
+$BtnClear.Add_Click(
+{
+	$Txtcompare.Text = ""
+}
+)
+
 #
 # Main Form load and close
 #
